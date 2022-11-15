@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "Backend for Character Rater App",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "run": "node server",
     "dev": "nodemon server"
@@ -10,7 +10,10 @@
   "author": "SeanJ",
   "license": "ISC",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "date-fns": "^2.29.3",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "uuid": "^9.0.0"
   },

@@ -25,6 +25,8 @@ const logEvents = async (message, logFileName) => {
 const logger = (req, res, next) => {
     //call LogEvents method with req object message and the name of the file to write too
     logEvents(`${req.method}\t${req.url}\t${req.headers.origin}`, 'reqLog.log');
+    console.log(`${req.method} ${req.path}`);
+    next()
 }
 
 module.exports = { logEvents, logger }

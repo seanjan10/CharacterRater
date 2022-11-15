@@ -4,8 +4,8 @@
   "description": "Backend for Character Rater App",
   "main": "index.js",
   "scripts": {
-    "run": "node index",
-    "test": "nodemon index"
+    "run": "node server",
+    "dev": "nodemon server"
   },
   "author": "SeanJ",
   "license": "ISC",

@@ -2,12 +2,17 @@ require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const app = express()
-const { logger } = require('./middleware/logger')
+const { logger, logEvents } = require('./middleware/logger')
 const errorHandler = require('./middleware/errorHandler')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
+const connectDB = require('./config/dbConn')
+const mongoose = require('mongoose')
+const { logEvent } = require('./middleware/logger')
 const PORT = process.env.PORT || 3000
+
+connectDB()
 
 app.use(logger)
 
@@ -25,6 +30,7 @@ app.use('/', require('./routes/root'));
 app.all('*', (req, res) => {
     //error code for incorrect page
     res.status(404);
+    
     //send error message depending on mime type they accept
     if (req.accepts('html')) {
         res.sendFile(path.join(__dirname, 'views', '404.html'));
@@ -37,4 +43,13 @@ app.all('*', (req, res) => {
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {console.log(`Server started on port ${PORT}`)});
+mongoose.connection.once('open', () => {
+    console.log('Connected with MongoDB');
+    app.listen(PORT, () => {console.log(`Server started on port ${PORT}`)});
+})
+
+mongoose.connection.on('error', err => {
+    console.log(err);
+    
+    logEvents(`${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`, 'mongoErrLog.log')
+})

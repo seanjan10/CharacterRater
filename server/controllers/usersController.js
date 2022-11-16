@@ -23,7 +23,12 @@ const createNewUser = asyncHandler( async (req, res) => {
     if (!username || !email || !password || !Array.isArray(roles) || !roles.length) {
         return res.status(400).json({ message: "All fields are required" })
     }
-    
+    //TODO: username constraints i.e. regex
+    //console.log(typeof username);
+    // if (typeof username !== "string") {
+    //     return res.status(400).json({ message: "Username must be a string" })
+    // }
+
     //check for duplicate
     const duplicateUsername = await User.findOne({ username }).lean().exec()
     const duplicateEmail = await User.findOne({ email }).lean().exec()
@@ -52,7 +57,8 @@ const createNewUser = asyncHandler( async (req, res) => {
 // @access Private
 const updateUser = asyncHandler( async (req, res) => {
     const { id, username, email, password, active, roles,  date_created } = req.body
-    if (!id || !username || !email || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean' || typeof date_created !== 'date') {
+    
+    if (!id || !username || !email || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean') {
         return res.status(400).json({ message: 'All fields except password are required'})
     }
 

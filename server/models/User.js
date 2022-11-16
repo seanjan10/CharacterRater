@@ -17,13 +17,13 @@ const userSchema = new mongoose.Schema({
     },
     //accounts are considered inactive unless they verify email.
     active: {
-        type: String, 
+        type: Boolean, 
         default: false
     },
-    roles: [{
-        type: String, 
-        default: "User"
-    }],
+    roles: {
+        type: [String], 
+        default: ["User"]
+    },
     date_created: {
         type: Date,
         default: new Date(),

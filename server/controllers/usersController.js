@@ -51,13 +51,68 @@ const createNewUsers = asyncHandler( async (req, res) => {
 // @route patch /users
 // @access Private
 const updateNewUsers = asyncHandler( async (req, res) => {
+    const { id, username, email, password, active, roles,  date_created } = req.body
+    if (!id || !username || !email || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean' || typeof date_created !== 'date') {
+        return res.status(400).json({ message: 'All fields except password are required'})
+    }
+
+    const user = await User.findById(id).exec()
+
+    if (!user) {
+        return res.status(400).json({ message: 'User not found' })
+    }
     
+
+    //check for duplicate
+    const duplicateUsername = await User.findOne({ username }).lean().exec()
+    //Allow updates to the original user
+    //if _id.toString === id then thats not a duplicate since thats the user we want to update
+    if (duplicateUsername && duplicateUsername?._id.toString() !== id) {
+        return res.status(409).json({ message: "Duplicate username "})
+    }
+
+    const duplicateEmail = await User.findOne({ email }).lean().exec()
+
+    if (duplicateEmail && duplicateEmail?._id.toString() !== id) {
+        return res.status(409).json({ message: "Duplicate Email "})
+    }
+
+
+
+    user.username = username;
+    user.email = email;
+    user.roles = roles;
+    user.active = active;
+    user.date_created = date_created;
+
+    if (password) {
+        // Hash
+        user.password = await bcrypt.hash(password, saltRounds)
+    }
+
+    const updatedUser = await user.save();
+
+    res.json({ message: `${updatedUser.username} updated` })
 })
 
 // @desc delete a user
 // @route delete /users
 // @access Private
 const deleteNewUsers = asyncHandler( async (req, res) => {
+    const { id } = req.body;
+
+    if (!id) {
+        return res.status(400).json({ message: 'User ID Required'})
+    }
+
+    const user = await User.findById(id).exec()
+
+    if (!user) {
+        return res.status(400).json({ message: 'User not found'})
+    }
+
+    const result = await user.deleteOne()
+    res.json(`Username ${result.username} with ID ${result._id} deleted`)
     
 })
 

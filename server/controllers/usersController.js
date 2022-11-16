@@ -16,7 +16,7 @@ const getAllUsers = asyncHandler( async (req, res) => {
 // @desc create new user
 // @route Post /users
 // @access Private
-const createNewUsers = asyncHandler( async (req, res) => {
+const createNewUser = asyncHandler( async (req, res) => {
     const { username, email, password, roles } = req.body
     
     //confirm data
@@ -50,7 +50,7 @@ const createNewUsers = asyncHandler( async (req, res) => {
 // @desc update a user
 // @route patch /users
 // @access Private
-const updateNewUsers = asyncHandler( async (req, res) => {
+const updateUser = asyncHandler( async (req, res) => {
     const { id, username, email, password, active, roles,  date_created } = req.body
     if (!id || !username || !email || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean' || typeof date_created !== 'date') {
         return res.status(400).json({ message: 'All fields except password are required'})
@@ -98,7 +98,7 @@ const updateNewUsers = asyncHandler( async (req, res) => {
 // @desc delete a user
 // @route delete /users
 // @access Private
-const deleteNewUsers = asyncHandler( async (req, res) => {
+const deleteUser = asyncHandler( async (req, res) => {
     const { id } = req.body;
 
     if (!id) {
@@ -117,7 +117,7 @@ const deleteNewUsers = asyncHandler( async (req, res) => {
 })
 
 module.exports = {
-    getAllusers, 
+    getAllUsers, 
     createNewUser,
     updateUser,
     deleteUser

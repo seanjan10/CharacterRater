@@ -19,7 +19,7 @@ const ratingSchema = new mongoose.Schema({
             required: true
         },
         rating: {
-            type: Integer, 
+            type: Number, 
             required: true
         },
         //accounts are considered inactive unless they verify email.

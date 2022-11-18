@@ -1,0 +1,13 @@
+.trending__img {
+    max-width: 100px;
+    max-height: 150px;
+    margin: 5px;
+}
+
+.trending__item {
+    list-style: none;
+}
+
+.public-trending__movies {
+    display: flex;
+}

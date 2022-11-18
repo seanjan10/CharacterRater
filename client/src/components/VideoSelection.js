@@ -1,4 +1,5 @@
 import {useState, useEffect } from "react"
+import VideoCard from "./VideoCard";
 //receives two props, type of video (tv, movie) and number to fetch??, time frame? (only day or week)
 const VideoSelection = (props) => {
 
@@ -6,7 +7,7 @@ const VideoSelection = (props) => {
 
     //const trendingAPIString = `https://api.themoviedb.org/3/trending/${props.media}/${props.time}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
 
-    const imagePath = "https://image.tmdb.org/t/p/original/"
+    
 
     useEffect(() => {
         const trendingAPIString = `https://api.themoviedb.org/3/trending/${props.media}/${props.time}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
@@ -32,6 +33,7 @@ const VideoSelection = (props) => {
         //console.log(data.total_pages);
         return data;
     }
+    
 
     //fetchTrending(trendingAPIString);
 
@@ -41,11 +43,11 @@ const VideoSelection = (props) => {
   return (
     
     <div>
-        <ul>
-            {trending.total_pages} <br />
-            {trending.total_results} <br />
-           {/* {JSON.stringify(trending.results)} */}
-           {trending.results && trending.results.map( (item,i) =>  <div key={i}>{item.title}</div>)} 
+        <h1>Trending {props.media === 'movie' ? "Movies": "TV Shows"}</h1>
+        <ul className="public-trending__movies">
+            {trending.results &&
+            trending.results.map( (item, i) =>
+            <VideoCard key={i} mediaID={item.id} title={props.media === 'movie' ? item.title : item.name} type={props.media === 'movie' ? item.title : item.name} poster_path={item.poster_path} /> )}
             
         </ul>
     </div>        
@@ -54,3 +56,10 @@ const VideoSelection = (props) => {
 }
 
 export default VideoSelection
+
+/* {/* {JSON.stringify(trending.results)} } */
+/*
+ {trending.total_pages} <br />
+            {trending.total_results} <br />
+            {trending.results && 
+            trending.results.map( (item,i) =>  <div key={i}>{item.title}</div>)}  */

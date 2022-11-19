@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import fetchJSON from "./fetchJSON";
+import fetchJSON from "../../functions/fetchJSON";
 const CharacterDisplay = ({mediaID, mediaType}) => {
     
     const [characters, setCharacters] = useState("");

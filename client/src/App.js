@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom'
-import Layout from './components/Layout'
-import Public from './components/Public'
+import Layout from './components/LayoutView/Layout'
+import Public from './components/IndexView/Public'
 import Login from './components/Login'
-import MediaPage from './components/MediaPage'
-import CharacterPage from './components/CharacterPage'
+import MediaPage from './components/MediaView/MediaPage'
+import CharacterPage from './components/CharacterView/CharacterPage'
 
 
 function App() {

@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
-import fetchJSON from './fetchJSON';
+import fetchJSON from '../../functions/fetchJSON';
 import CharacterDisplay from './CharacterDisplay'
 
 const MediaPage = ({media}) => {

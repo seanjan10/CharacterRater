@@ -1,6 +1,6 @@
 import {useState, useEffect } from "react"
 import VideoCard from "./VideoCard";
-import fetchJSON from "./fetchJSON";
+import fetchJSON from "../../functions/fetchJSON";
 //receives two props, type of video (tv, movie) and number to fetch??, time frame? (only day or week)
 const VideoSelection = (props) => {
 
@@ -16,16 +16,7 @@ const VideoSelection = (props) => {
 
         getTrending();
     }, [])
-
-
-    // const fetchTrending = async (str) => {
-    //     const res = await fetch(str);
-    //     const data = await res.json();
-    //     //console.log(data.total_pages);
-    //     return data;
-    // }
-
-    
+   
   return (
     
     <div>

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import fetchJSON from "./fetchJSON";
-const CharacterDisplay = ({mediaID}) => {
+const CharacterDisplay = ({mediaID, mediaType}) => {
     
     const [characters, setCharacters] = useState("");
-
+    //initial data
     useEffect(() => {
-
-        const charactersAPIString = `https://api.themoviedb.org/3/tv/${mediaID}/aggregate_credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
+        
+        const charactersAPIString = mediaType === 'tv' ?  `https://api.themoviedb.org/3/tv/${mediaID}/aggregate_credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}` : `https://api.themoviedb.org/3/movie/${mediaID}/credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
 
         const getCharacters = async () => {
             const data = await fetchJSON(charactersAPIString);
@@ -14,7 +14,7 @@ const CharacterDisplay = ({mediaID}) => {
         }
         getCharacters();
     }, [])
-    
+    //comparator for Array.sort
     function sortByEpisodeCount(a,b) {
         if (a.episode_count > b.episode_count) {
             return -1
@@ -25,7 +25,8 @@ const CharacterDisplay = ({mediaID}) => {
 
     return (
         <div className="">
-            {characters.cast &&
+            {/* display actors and characters from tv show */}
+            {mediaType === 'tv' && characters.cast &&
             characters.cast.map( (item, i) => { 
                return (<p key={i}><b>real name </b> = {item.name}  <b> character name </b> = 
                {/* sort characters based on how many episodes that character appeared in if the actor played more than one character */}
@@ -47,6 +48,15 @@ const CharacterDisplay = ({mediaID}) => {
 
                </p>)
             })}
+            {/* display actors and characters from movie */}
+            {mediaType === 'movie' && characters.cast &&
+            characters.cast.map( (item, i) => { 
+               return (<p key={i}><b>real name </b> = {item.name}  <b> character name </b> = {item.character}
+               </p>)
+            })}
+
+
+
         </div>
     )
 }

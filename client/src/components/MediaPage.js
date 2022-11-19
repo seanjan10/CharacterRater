@@ -36,14 +36,14 @@ const MediaPage = ({media}) => {
             <img className="mediapage__image" src={imagePath + content.poster_path}></img>
             <p>{content.tagline}</p>
             <p>{media === "tv" ? content.name : content.title} ({getYear()})</p>
-            <p>{content.poster_path}</p>
+            {/*<p>{content.poster_path}</p> */ }
             <ul>
             {content.genres &&
             content.genres.map(( item, i ) => {
               return <li key={i}>{item.name} </li>
             })} </ul>
             <p>Overview <br/>{content.overview}</p>
-            <CharacterDisplay mediaID={id}/>
+            <CharacterDisplay mediaID={id} mediaType={media}/>
 
             </div>
         </>

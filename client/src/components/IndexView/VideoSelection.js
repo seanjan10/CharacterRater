@@ -24,7 +24,7 @@ const VideoSelection = (props) => {
         <ul className="public-trending__movies">
             {trending.results &&
             trending.results.map( (item, i) =>
-            <VideoCard key={i} mediaID={item.id} title={props.media === 'movie' ? item.title : item.name} type={props.media === 'movie' ? item.title : item.name} poster_path={item.poster_path} /> )}
+            <VideoCard key={i} mediaID={item.id} title={props.media === 'movie' ? item.title : item.name} type={props.media === 'movie' ? item.title : item.name} poster_path={item.poster_path} media={props.media}/> )}
             
         </ul>
     </div>        

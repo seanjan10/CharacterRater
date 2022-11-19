@@ -4,9 +4,13 @@ const CharacterDisplay = ({mediaID, mediaType}) => {
     
     const [characters, setCharacters] = useState("");
     //initial data
+
+    const imagePath = "https://image.tmdb.org/t/p/original"
+
     useEffect(() => {
         
         const charactersAPIString = mediaType === 'tv' ?  `https://api.themoviedb.org/3/tv/${mediaID}/aggregate_credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}` : `https://api.themoviedb.org/3/movie/${mediaID}/credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
+
 
         const getCharacters = async () => {
             const data = await fetchJSON(charactersAPIString);
@@ -28,7 +32,7 @@ const CharacterDisplay = ({mediaID, mediaType}) => {
             {/* display actors and characters from tv show */}
             {mediaType === 'tv' && characters.cast &&
             characters.cast.map( (item, i) => { 
-               return (<p key={i}><b>real name </b> = {item.name}  <b> character name </b> = 
+               return (<p key={i}> <img className="media__character-img" src={imagePath + item.profile_path} alt={item.name}/> <b>real name </b> = {item.name}  <b> character name </b> = 
                {/* sort characters based on how many episodes that character appeared in if the actor played more than one character */}
                {/* remove credit_id for formatting */}
                {item.roles.length > 1 &&

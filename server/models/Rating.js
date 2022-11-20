@@ -1,8 +1,8 @@
-import { Schema, model } from 'mongoose'
+const mongoose = require('mongoose')
 
-const ratingSchema = new Schema({
+const ratingSchema = new mongoose.Schema({
         user: {
-            type: Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: 'User'
         },
@@ -34,4 +34,4 @@ const ratingSchema = new Schema({
     }
 )
 
-module.export = model('Rating', ratingSchema)
+module.export = mongoose.model('Rating', ratingSchema)

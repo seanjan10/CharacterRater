@@ -65,6 +65,8 @@ const createNewUser = asyncHandler( async (req, res) => {
 const updateUser = asyncHandler( async (req, res) => {
     const { id, username, email, password, active, roles,  date_created } = req.body
     
+    //console.log(`id = ${id}\tusername=${username}\temail=${email}\troles is array = ${Array.isArray(roles)}\troles length = ${roles.length}\ttype of active = ${typeof active}`)
+
     if (!id || !username || !email || !Array.isArray(roles) || !roles.length || typeof active !== 'boolean') {
         return res.status(400).json({ message: 'All fields except password are required'})
     }

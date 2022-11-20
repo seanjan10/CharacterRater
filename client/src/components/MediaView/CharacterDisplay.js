@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
 import fetchJSON from "../../functions/fetchJSON";
+//import * as cheerio from 'cheerio'
+
 const CharacterDisplay = ({mediaID, mediaType}) => {
     
     const [characters, setCharacters] = useState("");
+    //const [series, setSeries] = useState("");
     //initial data
 
     const imagePath = "https://image.tmdb.org/t/p/original"
@@ -10,13 +13,21 @@ const CharacterDisplay = ({mediaID, mediaType}) => {
     useEffect(() => {
         
         const charactersAPIString = mediaType === 'tv' ?  `https://api.themoviedb.org/3/tv/${mediaID}/aggregate_credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}` : `https://api.themoviedb.org/3/movie/${mediaID}/credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
-
+        
+        //const mediaAPIString = `https://api.themoviedb.org/3/${mediaType}/${mediaID}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
 
         const getCharacters = async () => {
             const data = await fetchJSON(charactersAPIString);
             setCharacters(data);
         }
+
+        // const getSeries = async () => {
+        //     const data = await fetchJSON(mediaAPIString);
+        //     setSeries(data);
+        // }
+
         getCharacters();
+        //getSeries();
     }, [])
     //comparator for Array.sort
     function sortByEpisodeCount(a,b) {
@@ -26,6 +37,14 @@ const CharacterDisplay = ({mediaID, mediaType}) => {
             return 1
         }
     }
+    //try to use fandom image if the url exists, else fallback to actor image
+    // async function fetchFandomImage(name,series) {
+    //     const seriesStrip = series.split(" ");
+    //     console.log(seriesStrip)
+    //     const fandomScrapeURL = `https://${series}.fandom.com/wiki/${name}`
+    // }
+
+
 
     return (
         <div className="">
@@ -55,7 +74,7 @@ const CharacterDisplay = ({mediaID, mediaType}) => {
             {/* display actors and characters from movie */}
             {mediaType === 'movie' && characters.cast &&
             characters.cast.map( (item, i) => { 
-               return (<p key={i}><b>real name </b> = {item.name}  <b> character name </b> = {item.character}
+               return (<p key={i}> <img className="media__character-img" src={imagePath + item.profile_path} alt={item.name}/><b> real name </b> = {item.name}  <b> character name </b> = {item.character}
                </p>)
             })}
 

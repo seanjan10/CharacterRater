@@ -4,7 +4,8 @@ import Public from './components/IndexView/Public'
 import Login from './components/Login'
 import MediaPage from './components/MediaView/MediaPage'
 import CharacterPage from './components/CharacterView/CharacterPage'
-
+import UserPage from './components/UserView/UserPage'
+import SearchResults from './components/Search/SearchResults'
 
 function App() {
   return (
@@ -15,6 +16,8 @@ function App() {
         <Route path="tv/:id" element={<MediaPage media="tv"/>} />
         <Route path="movie/:id" element={<MediaPage media="movie"/>} />
         <Route path="character/:id" element={<CharacterPage />} />
+        <Route path="user/:id" element={<UserPage />} />
+        <Route path="search" element={<SearchResults />} />
       </Route>
     </Routes>
   )

@@ -17,15 +17,12 @@
     max-height: 400px;
 }
 
-.layout__nav {
-    margin: 1vw;
-}
-
-.layout-nav__items {
-    margin: 100px;
-}
 
 .media__character-img {
     max-width: 100px;
     max-height: 150px;
+}
+
+.trending__item-anchor {
+    text-decoration: none!important;
 }

@@ -9,11 +9,10 @@ const VideoCard = ({mediaID, title, poster_path, type, media}) => {
   
   return (
     <li className="trending__item">
-        <Link to={mediaLink}>
+        <Link to={mediaLink} className="trending__item-anchor">
         <img className="trending__img" alt={title}src={imagePath + poster_path}/>
-        </Link>
-       <p>{title}</p>
-       
+       <p className="trending__item-title" >{title}</p>
+       </Link>
     </li>
   )
 }

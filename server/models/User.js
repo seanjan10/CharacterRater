@@ -20,10 +20,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean, 
         default: false
     },
-    roles: {
-        type: [String], 
-        default: ["User"]
-    },
+    roles: [{
+        type: String, 
+        default: "User"
+    }],
     date_created: {
         type: Date,
         default: new Date(),

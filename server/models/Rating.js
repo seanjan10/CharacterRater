@@ -1,8 +1,8 @@
-const mongoose = require('mongoose')
+import { Schema, model } from 'mongoose'
 
-const ratingSchema = new mongoose.Schema({
+const ratingSchema = new Schema({
         user: {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             required: true,
             ref: 'User'
         },
@@ -23,9 +23,10 @@ const ratingSchema = new mongoose.Schema({
             required: true
         },
         //accounts are considered inactive unless they verify email.
-        active: {
+        rating_text: {
             type: String, 
-            default: false
+            default: false,
+            required: false
         }
     },
     {
@@ -33,4 +34,4 @@ const ratingSchema = new mongoose.Schema({
     }
 )
 
-module.export = mongoose.model('Rating', ratingSchema)
+module.export = model('Rating', ratingSchema)

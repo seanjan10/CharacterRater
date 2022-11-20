@@ -10,7 +10,7 @@ const corsOptions = require('./config/corsOptions')
 const connectDB = require('./config/dbConn')
 const mongoose = require('mongoose')
 const { logEvent } = require('./middleware/logger')
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3500
 
 connectDB()
 
@@ -26,6 +26,8 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/root'));
 app.use('/users', require('./routes/userRoutes'))
+//todo ratings route
+
 //URLS that don't exist
 app.all('*', (req, res) => {
     //error code for incorrect page

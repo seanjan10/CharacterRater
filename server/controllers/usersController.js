@@ -19,6 +19,13 @@ const getAllUsers = asyncHandler( async (req, res) => {
 const createNewUser = asyncHandler( async (req, res) => {
     const { username, email, password, roles } = req.body
     
+    console.log(username)
+    console.log(email)
+    console.log(password)
+    console.log(roles);
+    console.log(Array.isArray(roles))
+    //console.log(roles.length)
+
     //confirm data
     if (!username || !email || !password || !Array.isArray(roles) || !roles.length) {
         return res.status(400).json({ message: "All fields are required" })

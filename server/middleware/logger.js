@@ -1,8 +1,8 @@
-const { format } = require('date-fns')
-const { v4: uuid } = require('uuid')
-const fs = require('fs')
-const fsPromises = require('fs').promises
-const path = require('path')
+import { format } from 'date-fns'
+import { v4 as uuid } from 'uuid'
+import { existsSync } from 'fs'
+import { promises as fsPromises } from 'fs'
+import { join } from 'path'
 
 const logEvents = async (message, logFileName) => {
     const dateTime = `${format(new Date(), 'yyyy/MM/dd\tHH:mm:ss')}`
@@ -10,12 +10,12 @@ const logEvents = async (message, logFileName) => {
 
     try {
         //check to see if folder doesn't exist
-        if (!fs.existsSync(path.join(__dirname, '..', 'logs'))) {
+        if (!existsSync(join(__dirname, '..', 'logs'))) {
             //await create folder if doesn't exist
-            await fsPromises.mkdir(path.join(__dirname, '..', 'logs'));
+            await fsPromises.mkdir(join(__dirname, '..', 'logs'));
         }
         //await for file named after logFileName var to add logItem to the file
-        await fsPromises.appendFile(path.join(__dirname, '..', 'logs', logFileName), logItem);
+        await fsPromises.appendFile(join(__dirname, '..', 'logs', logFileName), logItem);
         
     } catch (err) {
         console.log(err);
@@ -29,4 +29,4 @@ const logger = (req, res, next) => {
     next()
 }
 
-module.exports = { logEvents, logger }
+export default { logEvents, logger }

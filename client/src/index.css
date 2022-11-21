@@ -26,3 +26,29 @@
 .trending__item-anchor {
     text-decoration: none!important;
 }
+
+.search__image {
+    height: 150px;
+    width: 100px;
+    margin: 1%;
+}
+
+.search__container {
+    /* display:flex;
+    flex-wrap: wrap;
+    flex-direction: row; */
+}
+
+.search_result-item {
+    
+}
+
+.search__results-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+}
+
+.search__load-more {
+}
+

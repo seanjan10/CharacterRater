@@ -18,7 +18,7 @@ const Navbar = () => {
   
   return (
     <div>
-      <nav className="navbar navbar-dark navbar-expand-lg bg-primary">
+      <nav className="navbar navbar-dark navbar-expand bg-primary">
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">

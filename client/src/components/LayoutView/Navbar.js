@@ -1,25 +1,20 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation} from 'react-router-dom'
+import NavBarItem from './NavBarItem';
 
 const Navbar = () => {
+  const location = useLocation();
+  //console.log(location.pathname);
+
   return (
     <div>
       <nav className="navbar navbar-dark navbar-expand-lg bg-primary">
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-
-              <li className="nav-item">
-                <Link to="/" className="nav-link active">Home</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/movies" className="nav-link"> Movies</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/tv" className="nav-link">TV Shows</Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/characters" className="nav-link">Characters</Link>
-              </li>
+              <NavBarItem title="Home" url="/" active={location.pathname}/>
+              <NavBarItem title="Movies" url="/movie" active={location.pathname}/>
+              <NavBarItem title="TV Shows" url="/tv" active={location.pathname}/>
+              <NavBarItem title="Characters" url="/character" active={location.pathname}/>
             </ul>
             <form className="d-flex" role="search">
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">

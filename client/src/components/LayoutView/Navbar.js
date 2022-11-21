@@ -23,9 +23,9 @@ const Navbar = () => {
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <NavBarItem title="Home" url="/" active={location.pathname}/>
-              <NavBarItem title="Movies" url="/movie" active={location.pathname}/>
-              <NavBarItem title="TV Shows" url="/tv" active={location.pathname}/>
+              <NavBarItem title="Home" url="/" active={location.pathname} icon="home"/>
+              <NavBarItem title="Movies" url="/movie" active={location.pathname} icon="film"/>
+              <NavBarItem title="TV Shows" url="/tv" active={location.pathname} icon="tv"/>
               <NavBarItem title="Characters" url="/character" active={location.pathname}/>
             </ul>
             <form className="d-flex" role="search" onSubmit={handleSubmit}>

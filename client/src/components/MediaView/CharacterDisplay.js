@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import fetchJSON from "../../functions/fetchJSON";
+import placeholder from "../../static/placeholder.jpg"
 //import * as cheerio from 'cheerio'
 
 const CharacterDisplay = ({mediaID, mediaType}) => {
@@ -51,7 +52,7 @@ const CharacterDisplay = ({mediaID, mediaType}) => {
             {/* display actors and characters from tv show */}
             {mediaType === 'tv' && characters.cast &&
             characters.cast.map( (item, i) => { 
-               return (<p key={i}> <img className="media__character-img" src={imagePath + item.profile_path} alt={item.name}/> <b>real name </b> = {item.name}  <b> character name </b> = 
+               return (<p key={i}> <img className="media__character-img" src={item.profile_path ? imagePath + item.profile_path : placeholder} alt={item.name}/> <b>real name </b> = {item.name}  <b> character name </b> = 
                {/* sort characters based on how many episodes that character appeared in if the actor played more than one character */}
                {/* remove credit_id for formatting */}
                {item.roles.length > 1 &&
@@ -74,7 +75,7 @@ const CharacterDisplay = ({mediaID, mediaType}) => {
             {/* display actors and characters from movie */}
             {mediaType === 'movie' && characters.cast &&
             characters.cast.map( (item, i) => { 
-               return (<p key={i}> <img className="media__character-img" src={imagePath + item.profile_path} alt={item.name}/><b> real name </b> = {item.name}  <b> character name </b> = {item.character}
+               return (<p key={i}> <img className="media__character-img" src={item.profile_path ? imagePath + item.profile_path : placeholder} alt={item.name}/><b> real name </b> = {item.name}  <b> character name </b> = {item.character}
                </p>)
             })}
 

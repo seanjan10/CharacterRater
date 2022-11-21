@@ -13,6 +13,7 @@ const Navbar = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate(`/search?query=${searchQuery}`)
+    //lazy fix for fixing counter issue
     //window.location.reload();
   }
   

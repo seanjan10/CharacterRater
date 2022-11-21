@@ -15,6 +15,7 @@ const SearchResults = () => {
     const queryAPIString = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&query=${searchQuery}&page=${counter}&include_adult=false`
 
 
+
     useEffect(() => {
         async function getData() {
             const data = await fetchJSON(queryAPIString);
@@ -25,11 +26,13 @@ const SearchResults = () => {
 
     useEffect(() => {
 
-
-     async function getData() {
-        const data = await fetchJSON(queryAPIString);
-        setResults(data);
-    }
+        //console.log(counter);
+        setCounter(1);
+        const queryAPIString = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&query=${searchQuery}&page=1&include_adult=false`
+        async function getData() {
+            const data = await fetchJSON(queryAPIString);
+            setResults(data);
+        }
     getData();
 
     }, [searchQuery])
@@ -43,14 +46,21 @@ const SearchResults = () => {
             const mergeData = {
                 page: counter,
                 results: results.results.concat(data.results),
+                //each fetch only returns an array of the first 20 results
                 total_results: results.total_results - 20,
                 total_pages: results.total_pages
             }
             //console.log(mergeData)
             setResults(mergeData);
         }
-        loadMore();
+        if (counter !== 1) {
+            loadMore();
+            // console.log("load more entries")
+        } else {
+            // console.log("new search, don't run")
+        }
     }, [counter])
+
 
     function determineMedia(item) {
         if (item.media_type === 'movie') {

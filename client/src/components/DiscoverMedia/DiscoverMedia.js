@@ -38,7 +38,7 @@ const DiscoverMedia = ({media}) => {
             const data = await fetchJSON(apiString);
             setResults(data);
             // console.log(apiString);
-            
+            currentPage = searchParams.get("page") ? searchParams.get("page") : 1;
         }
         getData();
     }, [media])
@@ -136,7 +136,7 @@ const DiscoverMedia = ({media}) => {
                 containerClassName="pagination"
                 activeClassName="active"
                 renderOnZeroPageCount={null}
-                forcePage={currentPage}
+                forcePage={currentPage -1}
                 
             />
         </div>

@@ -15,7 +15,7 @@ function App() {
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
         <Route path="movie" element={<DiscoverMedia media="movie"/>} />
-        <Route path="tv" element={<DiscoverMedia media="movie"/>} />
+        <Route path="tv" element={<DiscoverMedia media="tv"/>} />
         <Route path="tv/:id" element={<MediaPage media="tv"/>} />
         <Route path="movie/:id" element={<MediaPage media="movie"/>} />
         <Route path="character/:id" element={<CharacterPage />} />

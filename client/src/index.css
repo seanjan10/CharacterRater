@@ -53,3 +53,17 @@
     
 }
 
+.discover__list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.discover__item {
+    list-style: none;
+}
+
+.discover__item-image {
+    height: 150px;
+    width: 100px;
+    margin: 1%;
+}

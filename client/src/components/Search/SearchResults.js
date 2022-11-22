@@ -95,7 +95,10 @@ const SearchResults = () => {
                 })}
             </ul>
             {results.total_results > 20 &&
-                <button className="search__load-more" onClick={() => setCounter(counter + 1)}>Load More</button>
+            
+                <div className="d-flex justify-content-center">
+                <button className="search__load-more btn btn-primary" onClick={() => setCounter(counter + 1)}>Load More</button>
+                </div>
             }
             
         </div>
@@ -105,3 +108,4 @@ const SearchResults = () => {
 
 export default SearchResults
 
+//{/* wider button d-grid gap-2 col-6 mx-auto */}

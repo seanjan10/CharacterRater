@@ -1,7 +1,6 @@
 import { Link, useLocation, useNavigate} from 'react-router-dom'
 import { useState } from 'react'
 import NavBarItem from './NavBarItem';
-import SearchBar from './SearchBar';
 
 const Navbar = () => {
 

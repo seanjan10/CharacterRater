@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react"
 import fetchJSON from "../../functions/fetchJSON";
 import placeholder from "../../static/placeholder.jpg"
+//import fetchCharacterImage from "../../functions/fetchCharacterImage";
 //import * as cheerio from 'cheerio'
 
-const CharacterDisplay = ({mediaID, mediaType}) => {
+const CharacterDisplay = ({mediaID, mediaType, mediaName}) => {
     
     const [characters, setCharacters] = useState("");
     //const [series, setSeries] = useState("");
     //initial data
 
     const imagePath = "https://image.tmdb.org/t/p/original"
+    const apiReq = `http://localhost:3500/characterImage`
 
     useEffect(() => {
         
@@ -21,14 +23,7 @@ const CharacterDisplay = ({mediaID, mediaType}) => {
             const data = await fetchJSON(charactersAPIString);
             setCharacters(data);
         }
-
-        // const getSeries = async () => {
-        //     const data = await fetchJSON(mediaAPIString);
-        //     setSeries(data);
-        // }
-
         getCharacters();
-        //getSeries();
     }, [])
     //comparator for Array.sort
     function sortByEpisodeCount(a,b) {
@@ -38,14 +33,13 @@ const CharacterDisplay = ({mediaID, mediaType}) => {
             return 1
         }
     }
-    //try to use fandom image if the url exists, else fallback to actor image
-    // async function fetchFandomImage(name,series) {
-    //     const seriesStrip = series.split(" ");
-    //     console.log(seriesStrip)
-    //     const fandomScrapeURL = `https://${series}.fandom.com/wiki/${name}`
-    // }
 
-
+    /*async function getCharacterImage(val) {
+        const res = await fetch(val);
+        const data = await res.json();
+        console.log(data.link);
+        return data.link
+    } */
 
     return (
         <div className="">
@@ -59,15 +53,16 @@ const CharacterDisplay = ({mediaID, mediaType}) => {
                item.roles.sort(sortByEpisodeCount) &&
                item.roles.map((character, i) => {  
                 return (i + 1 === item.roles.length ) ? (<>
-                 {' '} {character.character} {' '} ({character.episode_count} Eps)
-                    </>): (<>
+                 {' '} {character.character} {' '} ({character.episode_count} Eps)</>
+                    ): (<>
                  {' '} {character.character} ({character.episode_count} Eps) / 
                     </>)
                })}
 
                {item.roles.length === 1 &&
                item.roles.map((character) => {  
-                return  <> {character.character} ({character.episode_count} Eps)</>
+                return  <> {character.character} ({character.episode_count} Eps) 
+                </>
                })}
 
                </p>)
@@ -87,3 +82,9 @@ const CharacterDisplay = ({mediaID, mediaType}) => {
 
 export default CharacterDisplay
 /*<> <b> character id </b> = {character.credit_id} <b>character name </b> = {character.character} </>) */
+
+//src={item.profile_path ? imagePath + item.profile_path : placeholder}
+
+//<img className="media__character-img" src={apiReq + "?characterMedia=" + character.character + " " + mediaName} alt={item.name}/>
+
+//{apiReq + "?characterMedia=" + character.character + " " + mediaName}

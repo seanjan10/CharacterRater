@@ -43,7 +43,7 @@ const MediaPage = ({media}) => {
               return <li key={i}>{item.name} </li>
             })} </ul>
             <p>Overview <br/>{content.overview}</p>
-            <CharacterDisplay mediaID={id} mediaType={media}/>
+            <CharacterDisplay mediaID={id} mediaType={media} mediaName={media === "tv" ? content.name : content.title}/>
 
             </div>
         </>

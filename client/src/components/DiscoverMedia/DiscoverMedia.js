@@ -116,7 +116,7 @@ const DiscoverMedia = ({media}) => {
                 </li>
         })}
         </ul>
-        <div>
+        <div className="d-flex justify-content-center">
             <ReactPaginate 
                 nextLabel="next >"
                 onPageChange={handlePageClick}
@@ -130,7 +130,7 @@ const DiscoverMedia = ({media}) => {
                 previousLinkClassName="page-link"
                 nextClassName="page-item"
                 nextLinkClassName="page-link"
-                breakLabel="..."
+                breakLabel="---"
                 breakClassName="page-item"
                 breakLinkClassName="page-link"
                 containerClassName="pagination"

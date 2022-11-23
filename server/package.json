@@ -19,6 +19,7 @@
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.2",
+    "puppeteer": "^19.2.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

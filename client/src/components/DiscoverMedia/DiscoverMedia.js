@@ -3,6 +3,11 @@ import { useState, useEffect } from "react"
 import fetchJSON from "../../functions/fetchJSON"
 import placeholder from "../../static/placeholder.jpg"
 import ReactPaginate from 'react-paginate'
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { faUpLong, faDownLong } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const DiscoverMedia = ({media}) => {
 
@@ -14,7 +19,7 @@ const DiscoverMedia = ({media}) => {
     
     const imagePath = "https://image.tmdb.org/t/p/original"
     const [searchParams, setSearchParams] = useSearchParams();
-    const currentPage = searchParams.get("page") ? searchParams.get("page") : 1;
+    let currentPage = searchParams.get("page") ? searchParams.get("page") : 1;
     //console.log(currentPage)
     const location = useLocation();
     let navigate = useNavigate();
@@ -31,6 +36,17 @@ const DiscoverMedia = ({media}) => {
         }
         getData();
     }, [])
+
+
+    useEffect(() => {
+        const getData = async () => {
+            const data = await fetchJSON(apiString);
+            setResults(data);
+            // console.log(apiString);
+            //setPageCount(data.total_pages)
+        }
+        getData();
+    }, [sortMethod])
 
     //reload data if user clicks between tv / movies
     useEffect(() => {
@@ -56,7 +72,7 @@ const DiscoverMedia = ({media}) => {
         navigate(`?page=${event.selected + 1}`)
     };
 
-    const getSortType = () => {
+    const getSortTypeHeader = () => {
         const getSortMethod = sortMethod.split('.')
         const type = getSortMethod[0]
         const direction = getSortMethod[1]
@@ -102,11 +118,121 @@ const DiscoverMedia = ({media}) => {
         }
     }
 
+    function onChangeDirectionButton() {
+        const sortType = sortMethod.split('.')[0]
+        const sortDirection = sortMethod.split('.')[1]
+        let dire = document.querySelector('.discover__sort-btn');
+        if (sortDirection === 'desc') {
+            setSortMethod(sortType + ".asc")
+        } else {
+            setSortMethod(sortType + ".desc")
+        }
+    }
 
+    //todo, refactro so don't have to copy paste if structure again
+    function currentSelection() {
+        const sortType = sortMethod.split('.')[0]
+        const sortDirection = sortMethod.split('.')[1]
+
+        if (sortType === 'popularity') {
+            if (sortDirection === 'asc') {
+                return <>Popular {'  '} <FontAwesomeIcon icon={faUpLong}/> </>
+            } else {
+                return <>Popular {'  '} <FontAwesomeIcon icon={faDownLong}/> </>
+            }
+        } else if (sortType === 'release_date') {
+            if (sortDirection === 'asc') {
+                return <>Release Date{'  '} <FontAwesomeIcon icon={faUpLong}/> </>
+            } else {
+                return <>Release Date {'  '} <FontAwesomeIcon icon={faDownLong}/> </>
+            }
+        } else if (sortType === 'revenue') {
+            if (sortDirection === 'asc') {
+                return <>Revenue {'  '} <FontAwesomeIcon icon={faUpLong}/> </>
+            } else {
+                return <>Revenue {'  '} <FontAwesomeIcon icon={faDownLong}/> </>
+            }
+        } else if (sortType === 'original_title') {
+            if (sortDirection === 'asc') {
+                return <>Title {'  '} <FontAwesomeIcon icon={faUpLong}/> </>
+            } else {
+                return <>Title {'  '} <FontAwesomeIcon icon={faDownLong}/> </>
+            }
+        } else if (sortType === 'vote_average') {
+            if (sortDirection === 'asc') {
+                return <>Average Rating {'  '} <FontAwesomeIcon icon={faUpLong}/> </>
+            } else {
+                return <>Average Rating {'  '} <FontAwesomeIcon icon={faDownLong}/> </>
+            }
+        } else if (sortType === 'vote_count') {
+            if (sortDirection === 'asc') {
+                return <>Votes {'  '} <FontAwesomeIcon icon={faUpLong}/> </>
+            } else {
+                return <>Votes {'  '} <FontAwesomeIcon icon={faDownLong}/> </>
+            }
+        } else {
+            return ""
+        }
+        
+    }
+
+    function notSelected() {
+        const nsArray = ['Popular', 'Release Date', 'Revenue', 'Title', 'Average Rating', 'Votes']
+        const sortChoices = ['popularity', 'release_date', 'revenue', 'original_title', 'vote_average', 'vote_count']
+        const sortType = sortMethod.split('.')[0]
+        let selIndex = null;
+        if (sortType === sortChoices[0]) {
+            selIndex = 0;
+        } else if (sortType === sortChoices[1]) {
+            selIndex = 1;
+        } else if (sortType === sortChoices[2]) {
+            selIndex = 2;
+        } else if (sortType === sortChoices[3]) {
+            selIndex = 3;
+        } else if (sortType === sortChoices[4]) {
+            selIndex = 4;
+        } else if (sortType === sortChoices[5]) {
+            selIndex = 5;
+        }
+
+        const content = nsArray.map((item,i) => {
+            //console.log(item);
+            if (i === selIndex) {
+                return
+            } else if (i == 2 && media == 'tv') {
+                return
+            } else {
+                return <Dropdown.Item key={i} onClick={(() => changeSort(sortChoices[i]))}>{item}</Dropdown.Item>
+            }
+            
+            
+        });
+
+
+        return <>{content}</>
+    }
+
+
+    function changeSort(index) {
+        setSortMethod(index + ".desc")
+    }
 
   return (
-    <div className='container'>
-        <h1>Showing {getSortType()} {media === "movie" ? "Movies" : "TV Shows"}</h1>
+    <div className='container '>
+        <div className="d-flex justify-content-center m-3">
+            <h1>
+            Showing {getSortTypeHeader()} {media === "movie" ? "Movies" : "TV Shows"}
+            </h1>
+            <Dropdown as={ButtonGroup}>
+                <Button variant="primary" className="discover__sort-btn" onClick={() => onChangeDirectionButton()}>{currentSelection()}  </Button>
+
+                <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
+
+                <Dropdown.Menu>
+                    {notSelected()}
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
         <ul className="discover__list">
         {results.results &&
         results.results.map((item, i) => {
@@ -154,3 +280,11 @@ export default DiscoverMedia
                         <img className="img-fluid discover__item-image" src={item.poster_path ? imagePath + item.poster_path : placeholder} alt={item.title} />{media === "movie" ? item.title : item.name} ({media === "movie" ? item.release_date?.split('-')[0] : item.first_air_date?.split('-')[0] }) </Link>
                 </li>
         })} */
+
+        /* <Dropdown.Menu>
+                    <Dropdown.Item href="?sorting=popularity_desc">Release Date</Dropdown.Item>
+                    <Dropdown.Item href="?sorting=revenue_desc">Revenue</Dropdown.Item>
+                    <Dropdown.Item href="?sorting=title_desc">Title</Dropdown.Item>
+                    <Dropdown.Item href="?sorting=vote_average_desc">Average Rating</Dropdown.Item>
+                    <Dropdown.Item href="?sorting=vote_count_desc">Votes</Dropdown.Item>
+                </Dropdown.Menu> */

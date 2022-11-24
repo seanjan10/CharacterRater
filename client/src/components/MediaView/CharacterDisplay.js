@@ -11,13 +11,15 @@ const CharacterDisplay = ({mediaID, mediaType, mediaName}) => {
     //initial data
 
     const imagePath = "https://image.tmdb.org/t/p/original"
-    const apiReq = `http://localhost:3500/characterImage`
 
     useEffect(() => {
         
-        const charactersAPIString = mediaType === 'tv' ?  `https://api.themoviedb.org/3/tv/${mediaID}/aggregate_credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}` : `https://api.themoviedb.org/3/movie/${mediaID}/credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
+        //const charactersAPIString = mediaType === 'tv' ?  `https://api.themoviedb.org/3/tv/${mediaID}/aggregate_credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}` : `https://api.themoviedb.org/3/movie/${mediaID}/credits?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
         
         //const mediaAPIString = `https://api.themoviedb.org/3/${mediaType}/${mediaID}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
+
+
+        const charactersAPIString = `http://localhost:3500/mediaPage/characters/?mediaID=${mediaID}&media=${mediaType}`
 
         const getCharacters = async () => {
             const data = await fetchJSON(charactersAPIString);

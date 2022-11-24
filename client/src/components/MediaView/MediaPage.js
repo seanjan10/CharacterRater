@@ -10,7 +10,8 @@ const MediaPage = ({media}) => {
     const imagePath = "https://image.tmdb.org/t/p/original"
     
     useEffect(() => {
-        const mediaAPIString =`https://api.themoviedb.org/3/${media}/${id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
+        //const mediaAPIString =`https://api.themoviedb.org/3/${media}/${id}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
+        const mediaAPIString = `http://localhost:3500/mediaPage/?media=${media}&id=${id}`
         const getMedia = async () => {
             const mediaData = await fetchJSON(mediaAPIString);
             setContent(mediaData);

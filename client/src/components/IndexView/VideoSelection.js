@@ -7,7 +7,8 @@ const VideoSelection = (props) => {
     const [trending, setTrending] = useState([]);
 
     useEffect(() => {
-        const trendingAPIString = `https://api.themoviedb.org/3/trending/${props.media}/${props.time}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
+        //const trendingAPIString = `https://api.themoviedb.org/3/trending/${props.media}/${props.time}?api_key=${process.env.REACT_APP_TMDB_API_KEY}`
+        const trendingAPIString = `http://localhost:3500/home/?media=${props.media}&time=${props.time}`
 
         const getTrending = async () => {
             const trendingFromServer = await fetchJSON(trendingAPIString);

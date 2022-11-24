@@ -27,6 +27,7 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/', require('./routes/root'));
 app.use('/users', require('./routes/userRoutes'))
 app.use('/discover', require('./routes/discover'))
+app.use('/search', require('./routes/searchResults'))
 //todo ratings route
 
 //URLS that don't exist

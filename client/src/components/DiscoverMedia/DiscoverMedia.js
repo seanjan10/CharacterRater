@@ -64,7 +64,7 @@ const DiscoverMedia = ({media}) => {
     //todo create custom hook/refactor code to remove the unnecessary code copy/paste
     const handlePageClick = (event) => {
         
-        const currentPageString = `https://api.themoviedb.org/3/discover/${media}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&sort_by=${sortMethod}&include_adult=false&include_video=false&page=${event.selected + 1}&with_watch_monetization_types=flatrate`
+        const currentPageString = `https://api.themoviedb.org/3/discover/${media}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&sort_by=${sortMethod}&include_adult=false&vote_count.gte=500&include_video=false&page=${event.selected + 1}&with_watch_monetization_types=flatrate`
 
         const getData = async () => {
             const data = await fetchJSON(currentPageString);

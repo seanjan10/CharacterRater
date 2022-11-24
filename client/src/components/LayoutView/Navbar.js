@@ -39,7 +39,7 @@ const Navbar = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               aria-label="Search"/>
-              <button className="btn btn-outline-dark" type="submit">Search</button>
+              <button className="btn btn-outline-light" type="submit">Search</button>
             </form>
           </div>
         </div>

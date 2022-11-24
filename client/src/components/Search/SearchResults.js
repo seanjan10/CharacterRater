@@ -12,7 +12,8 @@ const SearchResults = () => {
     const searchQuery = searchParams.get("query");
     
     
-    const queryAPIString = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&query=${searchQuery}&page=${counter}&include_adult=false`
+    //const queryAPIString = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&query=${searchQuery}&page=${counter}&include_adult=false`
+    const queryAPIString = `http://localhost:3500/search/?searchQuery=${searchQuery}&counter=${counter}`
 
 
 
@@ -28,7 +29,9 @@ const SearchResults = () => {
 
         //console.log(counter);
         setCounter(1);
-        const queryAPIString = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&query=${searchQuery}&page=1&include_adult=false`
+        //const queryAPIString = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&query=${searchQuery}&page=1&include_adult=false`
+        const queryAPIString = `http://localhost:3500/search/?searchQuery=${searchQuery}&counter=${counter}`
+        
         async function getData() {
             const data = await fetchJSON(queryAPIString);
             setResults(data);

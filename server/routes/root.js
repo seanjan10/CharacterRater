@@ -1,11 +1,16 @@
 const express = require('express')
 const router = express.Router()
 const path = require('path')
+const { pipeline } = require('stream')
 //const puppeteer = require('puppeteer')
 
 router.get('^/$|/index(.html)?', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'views', 'index.html'))
 })
+
+
+//const apiString = `https://api.themoviedb.org/3/discover/${media}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&sort_by=${sortMethod}&include_adult=false&vote_count.gte=500&include_video=false&page=${currentPage}&with_watch_monetization_types=flatrate`
+
 /*
 router.get('/characterImage', async (req, res) => {
     const browser = await puppeteer.launch();

@@ -56,7 +56,9 @@ const DiscoverMedia = ({media}) => {
             // console.log(apiString);
             currentPage = searchParams.get("page") ? searchParams.get("page") : 1;
         }
+        console.log("media changed")
         getData();
+        setSortMethod('popularity.desc')
     }, [media])
     
     //todo create custom hook/refactor code to remove the unnecessary code copy/paste
@@ -129,7 +131,7 @@ const DiscoverMedia = ({media}) => {
         }
     }
 
-    //todo, refactro so don't have to copy paste if structure again
+    //todo, refactor so don't have to copy paste if structure again
     function currentSelection() {
         const sortType = sortMethod.split('.')[0]
         const sortDirection = sortMethod.split('.')[1]
@@ -199,7 +201,7 @@ const DiscoverMedia = ({media}) => {
             //console.log(item);
             if (i === selIndex) {
                 return
-            } else if (i == 2 && media == 'tv') {
+            } else if (i === 2 && media === 'tv') {
                 return
             } else {
                 return <Dropdown.Item key={i} onClick={(() => changeSort(sortChoices[i]))}>{item}</Dropdown.Item>
@@ -215,6 +217,20 @@ const DiscoverMedia = ({media}) => {
 
     function changeSort(index) {
         setSortMethod(index + ".desc")
+    }
+
+    function titleLength(title) {
+        if (title === undefined) {
+            //console.log('wait')
+            return
+        }
+        if (title.length <= 17) {
+            return "card-title "
+        } else if (title.length > 17 && title.length <=38) {
+            return "card-title long-title"
+        } else {
+            return "card-title really-long-title"
+        }
     }
 
   return (
@@ -237,8 +253,21 @@ const DiscoverMedia = ({media}) => {
         {results.results &&
         results.results.map((item, i) => {
             return <li key={i} className="discover__item">
-                        <Link to={"/" + media + "/" + item.id}>
-                        <img className="img-fluid discover__item-image" src={item.poster_path ? imagePath + item.poster_path : placeholder} alt={item.title} />{media === "movie" ? item.title : item.name} ({media === "movie" ? item.release_date?.split('-')[0] : item.first_air_date?.split('-')[0] }) </Link>
+                        <Link to={"/" + media + "/" + item.id} className="discover__anchor">
+                        <div className="card m-2">
+                            <div className="row g-0">
+                                <div className="col-4">
+                                    <img className="img-fluid discover__item-image card-img-top" src={item.poster_path ? imagePath + item.poster_path : placeholder} alt={item.title} />
+                                    </div>
+                                    <div className="col-md-8">
+                                    <div className="card-body p-2">
+                                        <h5 className={media === "movie" ? titleLength(item?.title) : titleLength(item?.name)}>{media === "movie" ? item.title : item.name}</h5>
+                                        <p className="card-text mb-4"> {item.overview ? item.overview : "Does not have an overview"}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </Link>
                 </li>
         })}
         </ul>
@@ -288,3 +317,16 @@ export default DiscoverMedia
                     <Dropdown.Item href="?sorting=vote_average_desc">Average Rating</Dropdown.Item>
                     <Dropdown.Item href="?sorting=vote_count_desc">Votes</Dropdown.Item>
                 </Dropdown.Menu> */
+
+
+/* <img className="img-fluid discover__item-image" src={item.poster_path ? imagePath + item.poster_path : placeholder} alt={item.title} />{media === "movie" ? item.title : item.name} ({media === "movie" ? item.release_date?.split('-')[0] : item.first_air_date?.split('-')[0] }) */
+
+/*  <div className="card flex-row flex-wrap">
+                                <img className="img-fluid discover__item-image card-img-top" src={item.poster_path ? imagePath + item.poster_path : placeholder} alt={item.title} />
+                                <div className="card-body">
+                                    <h5 className="card-title">{media === "movie" ? item.title : item.name}</h5>
+                                    <p class="card__description"> {item.overview}</p>
+                                </div>
+        
+                            </div> */
+/*{media === "movie" ? item.title.length <=17 ? "card-title " : item.title.length <=38 ? "card-title long-title": "card-title really-long-title" : item.name.length <=17 ? "card-title " : item.name.length <=38 ? "card-title long-title": "card-title really-long-title"} */

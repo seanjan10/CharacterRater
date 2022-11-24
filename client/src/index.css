@@ -54,16 +54,49 @@
 }
 
 .discover__list {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 20% 20% 20% 20% 20%;
+
 }
 
 .discover__item {
     list-style: none;
+    padding-left: 0!important;
 }
 
 .discover__item-image {
-    height: 150px;
-    width: 100px;
+    max-width: 22rem;
+    max-height: 10rem;
     margin: 1%;
+    border-radius: 5%;
+}
+
+.discover__anchor{
+    text-decoration: none;
+}
+
+.card-text {
+    text-decoration: none;
+    color: black!important;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    max-height: 100px;
+}
+
+.long-title {
+    font-size: 1.2rem!important;
+}
+
+.really-long-title {
+    font-size: 1rem!important;
+}
+
+
+.card {
+    max-width: 22rem;
+    max-height: 10.5rem;
 }

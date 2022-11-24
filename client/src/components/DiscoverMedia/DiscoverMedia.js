@@ -24,7 +24,7 @@ const DiscoverMedia = ({media}) => {
     const location = useLocation();
     let navigate = useNavigate();
 
-    const apiString = `https://api.themoviedb.org/3/discover/${media}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&sort_by=${sortMethod}&include_adult=false&include_video=false&page=${currentPage}&with_watch_monetization_types=flatrate`
+    const apiString = `https://api.themoviedb.org/3/discover/${media}?api_key=${process.env.REACT_APP_TMDB_API_KEY}&language=en-US&sort_by=${sortMethod}&include_adult=false&vote_count.gte=500&include_video=false&page=${currentPage}&with_watch_monetization_types=flatrate`
 
 
     useEffect(() => {
@@ -87,9 +87,9 @@ const DiscoverMedia = ({media}) => {
             }
         } else if (type === 'release_date') {
             if (direction === 'asc') {
-                return "Newest"
-            } else {
                 return "Oldest"
+            } else {
+                return "Newest"
             }
         } else if (type === 'revenue') {
             if (direction === 'asc') {

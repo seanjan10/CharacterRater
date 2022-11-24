@@ -28,6 +28,8 @@ app.use('/', require('./routes/root'));
 app.use('/users', require('./routes/userRoutes'))
 app.use('/discover', require('./routes/discover'))
 app.use('/search', require('./routes/searchResults'))
+app.use('/home', require('./routes/home'))
+app.use('/mediaPage', require('./routes/mediaPage'))
 //todo ratings route
 
 //URLS that don't exist

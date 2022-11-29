@@ -8,6 +8,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { faUpLong, faDownLong } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 const DiscoverMedia = ({media}) => {
 
@@ -125,7 +126,7 @@ const DiscoverMedia = ({media}) => {
     function onChangeDirectionButton() {
         const sortType = sortMethod.split('.')[0]
         const sortDirection = sortMethod.split('.')[1]
-        let dire = document.querySelector('.discover__sort-btn');
+        //let dire = document.querySelector('.discover__sort-btn');
         if (sortDirection === 'desc') {
             setSortMethod(sortType + ".asc")
         } else {
@@ -236,68 +237,75 @@ const DiscoverMedia = ({media}) => {
     }
 
   return (
-    <div className='container '>
-        <div className="d-flex justify-content-center m-3">
-            <h1>
-            Showing {getSortTypeHeader()} {media === "movie" ? "Movies" : "TV Shows"}
-            </h1>
-            <Dropdown as={ButtonGroup}>
-                <Button variant="primary" className="discover__sort-btn" onClick={() => onChangeDirectionButton()}>{currentSelection()}  </Button>
+    <>
+        <HelmetProvider>
+            <Helmet>
+                <title>Discover {media ==='movie' ? "Movies": "TV Shows"}</title>
+            </Helmet>
+        </HelmetProvider>
+        <div className='container '>
+            <div className="d-flex justify-content-center m-3">
+                <h1>
+                Showing {getSortTypeHeader()} {media === "movie" ? "Movies" : "TV Shows"}
+                </h1>
+                <Dropdown as={ButtonGroup}>
+                    <Button variant="primary" className="discover__sort-btn" onClick={() => onChangeDirectionButton()}>{currentSelection()}  </Button>
 
-                <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
+                    <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
 
-                <Dropdown.Menu>
-                    {notSelected()}
-                </Dropdown.Menu>
-            </Dropdown>
-        </div>
-        <ul className="discover__list">
-        {results.results &&
-        results.results.map((item, i) => {
-            return <li key={i} className="discover__item">
-                        <Link to={"/" + media + "/" + item.id} className="discover__anchor">
-                        <div className="card m-2">
-                            <div className="row g-0">
-                                <div className="col-4">
-                                    <img className="img-fluid discover__item-image card-img-top" src={item.poster_path ? imagePath + item.poster_path : placeholder} alt={item.title} />
-                                    </div>
-                                    <div className="col-md-8">
-                                    <div className="card-body p-2">
-                                        <h5 className={media === "movie" ? titleLength(item?.title) : titleLength(item?.name)}>{media === "movie" ? item.title : item.name}</h5>
-                                        <p className="card-text mb-4"> {item.overview ? item.overview : "Does not have an overview"}</p>
+                    <Dropdown.Menu>
+                        {notSelected()}
+                    </Dropdown.Menu>
+                </Dropdown>
+            </div>
+            <ul className="discover__list">
+            {results.results &&
+            results.results.map((item, i) => {
+                return <li key={i} className="discover__item">
+                            <Link to={"/" + media + "/" + item.id} className="discover__anchor">
+                            <div className="card m-2">
+                                <div className="row g-0">
+                                    <div className="col-4">
+                                        <img className="img-fluid discover__item-image card-img-top" src={item.poster_path ? imagePath + item.poster_path : placeholder} alt={item.title} />
+                                        </div>
+                                        <div className="col-md-8">
+                                        <div className="card-body p-2">
+                                            <h5 className={media === "movie" ? titleLength(item?.title) : titleLength(item?.name)}>{media === "movie" ? item.title : item.name}</h5>
+                                            <p className="card-text mb-4"> {item.overview ? item.overview : "Does not have an overview"}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            </div>
-                        </Link>
-                </li>
-        })}
-        </ul>
-        <div className="d-flex justify-content-center">
-            <ReactPaginate 
-                nextLabel="next >"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={3}
-                marginPagesDisplayed={2}
-                pageCount={results.total_pages < 500 ? results.total_pages : 500}
-                previousLabel="< previous"
-                pageClassName="page-item"
-                pageLinkClassName="page-link"
-                previousClassName="page-item"
-                previousLinkClassName="page-link"
-                nextClassName="page-item"
-                nextLinkClassName="page-link"
-                breakLabel="---"
-                breakClassName="page-item"
-                breakLinkClassName="page-link"
-                containerClassName="pagination"
-                activeClassName="active"
-                renderOnZeroPageCount={null}
-                forcePage={currentPage -1}
-                
-            />
+                                </div>
+                            </Link>
+                    </li>
+            })}
+            </ul>
+            <div className="d-flex justify-content-center">
+                <ReactPaginate 
+                    nextLabel="next >"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={3}
+                    marginPagesDisplayed={2}
+                    pageCount={results.total_pages < 500 ? results.total_pages : 500}
+                    previousLabel="< previous"
+                    pageClassName="page-item"
+                    pageLinkClassName="page-link"
+                    previousClassName="page-item"
+                    previousLinkClassName="page-link"
+                    nextClassName="page-item"
+                    nextLinkClassName="page-link"
+                    breakLabel="---"
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                    containerClassName="pagination"
+                    activeClassName="active"
+                    renderOnZeroPageCount={null}
+                    forcePage={currentPage -1}
+                    
+                />
+            </div>
         </div>
-    </div>
+    </>
   )
 }
 

@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import fetchJSON from '../../functions/fetchJSON';
 import CharacterDisplay from './CharacterDisplay'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 const MediaPage = ({media}) => {
 
@@ -32,7 +33,12 @@ const MediaPage = ({media}) => {
 
 
     return (
-        <>
+        <>  
+             <HelmetProvider>
+                <Helmet>
+                    <title>{media === "tv" ? content.name : content.title}</title>
+                </Helmet>
+            </HelmetProvider>
             <div className="container">
             <img className="mediapage__image" src={imagePath + content.poster_path}></img>
             <p>{content.tagline}</p>

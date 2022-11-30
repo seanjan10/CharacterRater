@@ -2,6 +2,7 @@ const User = require('../models/User')
 const Rating = require('../models/Rating')
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 // @desc get all users
 // @route GET /users
@@ -55,9 +56,40 @@ const createNewUser = asyncHandler( async (req, res) => {
     const user = await User.create(userObject);
 
     if (user) { //user created
-        res.status(201).json({ message: `new user ${username}` })
+        res.status(201).json({ message: `new user ${username} their JWT is ${generateToken(user._id)}` })
+    } else {
+        res.status(400).json({ message: "Invalid User Data"})
     }
 })
+
+// @desc validate user login
+// @route Post /users/login
+// @access public
+const loginUser = asyncHandler(async (req, res) => {
+    const {username, password} = req.body
+
+    const user = await User.findOne({username})
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+        res.json({
+            message: `You can access ${username}'s account now. Your ID is ${user._id} and your JWT is ${generateToken(user._id)}`
+        })
+    } else {
+        res.status(400).json({message: "Error password is incorrect"})
+    }
+
+
+})
+
+// @desc get logged in user data
+// @route get /users/me
+// @access private
+const getMyData = asyncHandler(async (req, res) => {
+    res.json({message: 'User data display'})
+})
+
+
+
 
 // @desc update a user
 // @route patch /users
@@ -131,9 +163,20 @@ const deleteUser = asyncHandler( async (req, res) => {
     
 })
 
+// Generate JWT
+const generateToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: '30d',
+
+    })
+}
+
+
 module.exports = {
     getAllUsers, 
     createNewUser,
+    loginUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    getMyData
 }

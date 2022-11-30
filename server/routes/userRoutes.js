@@ -8,4 +8,11 @@ router.route('/')
     .patch(usersController.updateUser)
     .delete(usersController.deleteUser)
 
+router.route('/login')
+    .post(usersController.loginUser)
+
+const { protect } = require('../middleware/authMiddleware')
+router.route('/me')
+    .get(protect, usersController.getMyData)
+
 module.exports = router;

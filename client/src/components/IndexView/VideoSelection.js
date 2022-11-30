@@ -1,8 +1,6 @@
 import {useState, useEffect } from "react"
 import VideoCard from "./VideoCard";
 import fetchJSON from "../../functions/fetchJSON";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LoadingIcon from "../LoadingIcon";
 //receives two props, type of video (tv, movie) and number to fetch??, time frame? (only day or week)
 const VideoSelection = (props) => {

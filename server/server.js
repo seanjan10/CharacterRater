@@ -26,6 +26,7 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/root'));
 app.use('/users', require('./routes/userRoutes'))
+app.use('/ratings', require('./routes/ratingRoutes'))
 app.use('/discover', require('./routes/discover'))
 app.use('/search', require('./routes/searchResults'))
 app.use('/home', require('./routes/home'))
@@ -48,6 +49,7 @@ app.all('*', (req, res) => {
 })
 
 app.use(errorHandler);
+
 
 mongoose.connection.once('open', () => {
     console.log('Connected with MongoDB');

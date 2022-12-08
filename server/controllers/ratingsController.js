@@ -51,8 +51,60 @@ const createNewRating = asyncHandler(async (req, res) => {
 
 })
 
+// @desc update a rating
+// @route patch /ratings
+// @access Private
+const updateRating = asyncHandler(async (req, res) => {
+    const {id, user, rating, rating_text} = req.body
+
+    if (!id || !user || !rating) {
+        return res.status(400).json({message: "id, user and rating are required"})
+    }
+
+    const getRating = await Rating.findById(id).exec()
+
+    if (!getRating) {
+        return res.status(400).json({ message: "Rating with that ID not found"});
+    }
+
+    const previousRating = getRating.rating
+    const previousRatingText = getRating.rating_text
+
+    getRating.rating = rating
+    if (rating_text) {
+        getRating.rating_text = rating_text
+    }
+    const updatedRating = await getRating.save();
+
+    return res.status(200).json({message: `Updated Rating for ${user}. Rating changed from ${previousRating}/10 to ${updatedRating.rating}/10. Rating text changed to ${previousRatingText} --> ${updatedRating.rating_text}`})
+
+})
+
+// @desc update a rating
+// @route patch /ratings
+// @access Private
+const deleteRating = asyncHandler(async (req, res) => {
+    const { id } = req.body
+
+    if (!id) {
+        return res.status(400).json({message: "id required for deletion"})
+    }
+
+    const ratingID = await Rating.findById(id).exec();
+
+    if (!ratingID) {
+        return res.status(400).json({message: "rating with that id could not be found"});
+    }
+
+
+    const result = await ratingID.deleteOne();
+    return res.status(200).json({message: `Rating by ${userID?.user} with id ${result._id} and rating ${result.rating} and text ${result.rating_text} deleted`})
+})
+
 
 module.exports = {
     getAllRatings,
-    createNewRating
+    createNewRating,
+    updateRating,
+    deleteRating
 }

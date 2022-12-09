@@ -1,6 +1,7 @@
-import { Link, useLocation, useNavigate} from 'react-router-dom'
+import { useLocation, useNavigate} from 'react-router-dom'
 import { useState } from 'react'
 import NavBarItem from './NavBarItem';
+import LoginAndRegister from './LoginAndRegister';
 
 const Navbar = () => {
 
@@ -30,7 +31,7 @@ const Navbar = () => {
             <form className="d-flex" role="search" onSubmit={handleSubmit}>
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <Link to="/login" className="nav-link active">Login</Link>
+                  <LoginAndRegister />
                 </li>
               </ul>
               <input className="form-control me-2" 

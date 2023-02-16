@@ -11,6 +11,9 @@ router.route('/')
 router.route('/login')
     .post(usersController.loginUser)
 
+// router.route('/signup')
+//     .post(usersController.signupUser)
+
 const { protect } = require('../middleware/authMiddleware')
 router.route('/me')
     .get(protect, usersController.getMyData)

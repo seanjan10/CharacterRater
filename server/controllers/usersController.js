@@ -3,6 +3,7 @@ const Rating = require('../models/Rating')
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const validator = require('validator')
 
 // @desc get all users
 // @route GET /users
@@ -20,16 +21,24 @@ const getAllUsers = asyncHandler( async (req, res) => {
 const createNewUser = asyncHandler( async (req, res) => {
     const { username, email, password, roles } = req.body
     
-    console.log(username)
-    console.log(email)
-    console.log(password)
-    console.log(roles);
-    console.log(Array.isArray(roles))
+    // console.log(username)
+    // console.log(email)
+    // console.log(password)
+    // console.log(roles);
+    // console.log(Array.isArray(roles))
     //console.log(roles.length)
 
     //confirm data
     if (!username || !email || !password || !Array.isArray(roles) || !roles.length) {
         return res.status(400).json({ message: "All fields are required" })
+    }
+
+    if (!validator.isEmail(email)) {
+        return res.status(400).json({message: "Valid email required"})
+    }
+
+    if (!validator.isStrongPassword(password)) {
+        return res.status(400).json({message: "Strong password required. (Length: 8+, At least 1 lower and upper case, 1+ Number, 1+ Symbol)"})
     }
     //TODO: username constraints i.e. regex
     //console.log(typeof username);
@@ -54,9 +63,11 @@ const createNewUser = asyncHandler( async (req, res) => {
 
     //create and store new user
     const user = await User.create(userObject);
+    const userToken = generateToken(user._id)
 
+    
     if (user) { //user created
-        res.status(201).json({ message: `new user ${username} their JWT is ${generateToken(user._id)}` })
+        res.status(201).json({ message: `new user ${username} their JWT is ${userToken}` })
     } else {
         res.status(400).json({ message: "Invalid User Data"})
     }
@@ -80,6 +91,27 @@ const loginUser = asyncHandler(async (req, res) => {
 
 
 })
+
+// // @desc validate user signup
+// // @route Post /users/signup
+// // @access public
+// const signupUser = asyncHandler(async (req, res) => {
+//     const {username, password} = req.body
+
+//     const user = await User.findOne({username})
+
+//     if (user && (await bcrypt.compare(password, user.password))) {
+//         res.json({
+//             message: `You can access ${username}'s account now. Your ID is ${user._id} and your JWT is ${generateToken(user._id)}`
+//         })
+//     } else {
+//         res.status(400).json({message: "Error password is incorrect"})
+//     }
+
+
+// })
+
+
 
 // @desc get logged in user data
 // @route get /users/me
@@ -185,6 +217,7 @@ module.exports = {
     getAllUsers, 
     createNewUser,
     loginUser,
+    //signupUser,
     updateUser,
     deleteUser,
     getMyData

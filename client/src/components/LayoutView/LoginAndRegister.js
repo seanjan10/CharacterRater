@@ -18,7 +18,9 @@ function LoginAndRegister() {
     const handleShow2 = () => setShow2(true);
 
     const [email, setEmail] = useState('')
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [passwordRetype, setPasswordRetype] = useState('')
 
     const showSignUp = () => {
         setShow1(false);
@@ -30,10 +32,14 @@ function LoginAndRegister() {
         setShow1(true);
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmitSignUp = async (e) => {
       e.preventDefault();
-
       console.log(email, password);
+    }
+
+    const handleSubmitLogin = async (e) => {
+      e.preventDefault();
+      console.log(username, password);
     }
 
 
@@ -53,20 +59,24 @@ function LoginAndRegister() {
                 <Form.Label>Username</Form.Label>
                 <Form.Control
                   type="text"
+                  onChange={(e) => setUsername(e.target.value)}
+                  value={username}
                   autoFocus
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
                   autoFocus
                 />
               </Form.Group>
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" onClick={handleClose1}>
+            <Button variant="primary" onClick={handleSubmitLogin}>
               Login
             </Button>
             <Button variant="secondary" onClick={showSignUp}>
@@ -89,17 +99,18 @@ function LoginAndRegister() {
                   onChange={(e) => setEmail(e.target.value)}
                   value={email}
                   autoFocus
-                  required
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
                   type="text"
+                  onChange={(e) => setUsername(e.target.value)}
+                  value={username}
                   autoFocus
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
@@ -108,17 +119,19 @@ function LoginAndRegister() {
                   autoFocus
                 />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
                 <Form.Label>Re-type Password</Form.Label>
                 <Form.Control
                   type="password"
+                  onChange={(e) => setPasswordRetype(e.target.value)}
+                  value={passwordRetype}
                   autoFocus
                 />
               </Form.Group>
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" onClick={handleSubmit}>
+            <Button variant="primary" onClick={handleSubmitSignUp}>
               Create
             </Button>
             <Button variant="secondary" onClick={showLogin}>

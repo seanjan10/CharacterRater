@@ -34,7 +34,7 @@ function LoginAndRegister() {
 
     const handleSubmitSignUp = async (e) => {
       e.preventDefault();
-      console.log(email, password);
+      console.log(email, username, password, passwordRetype);
     }
 
     const handleSubmitLogin = async (e) => {

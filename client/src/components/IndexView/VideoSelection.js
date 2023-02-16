@@ -13,14 +13,16 @@ const VideoSelection = (props) => {
         const trendingAPIString = `http://localhost:3500/home/?media=${props.media}&time=${props.time}`
 
         const getTrending = async () => {
+            setLoading(true);
             const trendingFromServer = await fetchJSON(trendingAPIString);
             setTrending(trendingFromServer);
+            setLoading(false);
         };
 
         getTrending();
         //test if loading icon still works
         //setTimeout(() => setLoading(false), 500)
-        setLoading(false);
+        //setLoading(false);
     }, [])
    
   return (

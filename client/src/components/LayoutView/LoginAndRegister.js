@@ -17,6 +17,9 @@ function LoginAndRegister() {
     const handleClose2 = () => setShow2(false);
     const handleShow2 = () => setShow2(true);
 
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
     const showSignUp = () => {
         setShow1(false);
         setShow2(true);
@@ -25,6 +28,12 @@ function LoginAndRegister() {
     const showLogin = () => {
         setShow2(false);
         setShow1(true);
+    }
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      console.log(email, password);
     }
 
 
@@ -77,7 +86,10 @@ function LoginAndRegister() {
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                   type="email"
+                  onChange={(e) => setEmail(e.target.value)}
+                  value={email}
                   autoFocus
+                  required
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -91,6 +103,8 @@ function LoginAndRegister() {
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
                   autoFocus
                 />
               </Form.Group>
@@ -104,7 +118,7 @@ function LoginAndRegister() {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" onClick={handleClose2}>
+            <Button variant="primary" onClick={handleSubmit}>
               Create
             </Button>
             <Button variant="secondary" onClick={showLogin}>

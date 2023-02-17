@@ -2,6 +2,8 @@ import { useLocation, useNavigate} from 'react-router-dom'
 import { useState } from 'react'
 import NavBarItem from './NavBarItem';
 import LoginAndRegister from './LoginAndRegister';
+import { Link } from 'react-router-dom';
+import { useLogout } from '../../hooks/useLogout';
 
 const Navbar = () => {
 
@@ -10,6 +12,8 @@ const Navbar = () => {
   let navigate = useNavigate();
   //console.log(location.pathname);
 
+  const { logout } = useLogout()
+
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate(`/search?query=${searchQuery}`)
@@ -17,6 +21,10 @@ const Navbar = () => {
     //window.location.reload();
   }
   
+  const handleLogout = () => {
+    logout()
+  }
+
   return (
     <div>
       <nav className="navbar navbar-dark navbar-expand bg-primary">
@@ -32,6 +40,11 @@ const Navbar = () => {
               <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
                   <LoginAndRegister />
+                </li>
+                <li className="nav-item">
+                  <Link to="" onClick={handleLogout} className="nav-link active">
+                    Logout
+                  </Link>
                 </li>
               </ul>
               <input className="form-control me-2" 

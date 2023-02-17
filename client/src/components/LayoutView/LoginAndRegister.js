@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert"
 import { Link } from "react-router-dom";
 import { useSignup } from "../../hooks/useSignup";
+import { useLogin } from "../../hooks/useLogin";
 
 function LoginAndRegister() {
   const [show1, setShow1] = useState(false);
@@ -22,7 +23,9 @@ function LoginAndRegister() {
   const [password, setPassword] = useState("");
   const [passwordRetype, setPasswordRetype] = useState("");
   const [passwordNotMatch, setPasswordNotMatch] = useState(false);
-  const { signup, error, isLoading } = useSignup();
+  
+  const {signup, errorSignup, isLoadingSignup} = useSignup();
+  const {login, errorLogin, isLoadingLogin} = useLogin();
 
   const showSignUp = () => {
     setShow1(false);
@@ -33,7 +36,6 @@ function LoginAndRegister() {
     setShow2(false);
     setShow1(true);
   };
-  //abc123P^ddd
   const handleSubmitSignUp = async (e) => {
     e.preventDefault();
 
@@ -41,14 +43,19 @@ function LoginAndRegister() {
 
     if (password !== passwordRetype) {
       setPasswordNotMatch(true)
-    } else {
+    } else { 
       await signup(email, username, password);
     }
     //console.log(email, username, password, passwordRetype);
+
+    //TODO: close modal when successful
   };
 
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
+
+    await login(username, password)
+
     //console.log(username, password);
   };
 
@@ -85,13 +92,20 @@ function LoginAndRegister() {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleSubmitLogin}>
+          <Button 
+          variant="primary" 
+          onClick={handleSubmitLogin}
+          disabled={isLoadingLogin}>
             Login
           </Button>
           <Button variant="secondary" onClick={showSignUp}>
             Sign Up
           </Button>
         </Modal.Footer>
+        {errorLogin && 
+          <Alert variant="danger" style={{marginBottom: 0}}>
+            {errorLogin}
+        </Alert>}
       </Modal>
 
       <Modal show={show2} onHide={handleClose2} centered>
@@ -142,7 +156,7 @@ function LoginAndRegister() {
           <Button
             variant="primary"
             onClick={handleSubmitSignUp}
-            disabled={isLoading}
+            disabled={isLoadingSignup}
           >
             Create
           </Button>
@@ -150,15 +164,15 @@ function LoginAndRegister() {
             Login to existing account
           </Button>
         </Modal.Footer>
-        {error && 
+        {errorSignup && 
           <Alert variant="danger" style={{marginBottom: 0}}>
-            {error}
+            {errorSignup}
         </Alert>}
 
-        {passwordNotMatch && 
+         {passwordNotMatch && 
           <Alert variant="danger" style={{marginBottom: 0}}>
             {"Passwords do not match"}
-        </Alert>}
+        </Alert>} 
 
         
           
@@ -167,5 +181,10 @@ function LoginAndRegister() {
     </>
   );
 }
+
+//test account
+//email - test@outlook.ca
+//username - testAccount3
+//pw - test@ccounT3
 
 export default LoginAndRegister;

@@ -21,6 +21,7 @@ function LoginAndRegister() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRetype, setPasswordRetype] = useState("");
+  const [passwordNotMatch, setPasswordNotMatch] = useState(false);
   const { signup, error, isLoading } = useSignup();
 
   const showSignUp = () => {
@@ -32,11 +33,17 @@ function LoginAndRegister() {
     setShow2(false);
     setShow1(true);
   };
-
+  //abc123P^ddd
   const handleSubmitSignUp = async (e) => {
     e.preventDefault();
 
-    await signup(email, username, password);
+    setPasswordNotMatch(false)
+
+    if (password !== passwordRetype) {
+      setPasswordNotMatch(true)
+    } else {
+      await signup(email, username, password);
+    }
     //console.log(email, username, password, passwordRetype);
   };
 
@@ -146,7 +153,16 @@ function LoginAndRegister() {
         {error && 
           <Alert variant="danger" style={{marginBottom: 0}}>
             {error}
-          </Alert>}
+        </Alert>}
+
+        {passwordNotMatch && 
+          <Alert variant="danger" style={{marginBottom: 0}}>
+            {"Passwords do not match"}
+        </Alert>}
+
+        
+          
+
       </Modal>
     </>
   );

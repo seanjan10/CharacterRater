@@ -90,14 +90,25 @@ const createNewUser = asyncHandler( async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
     const {username, password} = req.body
 
-    const user = await User.findOne({username})
+    try {
 
-    if (user && (await bcrypt.compare(password, user.password))) {
-        res.json({
-            message: `You can access ${username}'s account now. Your ID is ${user._id} and your JWT is ${generateToken(user._id)}`
-        })
-    } else {
-        res.status(400).json({message: "Error password is incorrect"})
+        if (!username || !password) {
+            throw Error('All fields are required')
+        }
+        const user = await User.findOne({username})
+
+        if (!user) {
+            throw Error('Incorrect username')
+        }
+
+        const match = await bcrypt.compare(password, user.password)
+        if (!match) {
+            throw Error("Incorrect password")
+        }
+        const userToken = generateToken(user._id)
+        res.status(200).json({username, userToken})
+    } catch (error) {
+        res.status(400).json({ error: error.message})
     }
 
 

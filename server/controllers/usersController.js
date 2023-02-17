@@ -28,49 +28,60 @@ const createNewUser = asyncHandler( async (req, res) => {
     // console.log(Array.isArray(roles))
     //console.log(roles.length)
 
-    //confirm data
-    if (!username || !email || !password || !Array.isArray(roles) || !roles.length) {
-        return res.status(400).json({ message: "All fields are required" })
-    }
+    try {
+        //confirm data
+        if (!username || !email || !password || !Array.isArray(roles) || !roles.length) {
+            //return res.status(400).json({ message: "All fields are required" })
+            throw Error("All fields are required")
+        }
 
-    if (!validator.isEmail(email)) {
-        return res.status(400).json({message: "Valid email required"})
-    }
+        if (!validator.isEmail(email)) {
+            //return res.status(400).json({message: "Valid email required"})
+            throw Error("Valid email required")
+        }
 
-    if (!validator.isStrongPassword(password)) {
-        return res.status(400).json({message: "Strong password required. (Length: 8+, At least 1 lower and upper case, 1+ Number, 1+ Symbol)"})
+        if (!validator.isStrongPassword(password)) {
+            //return res.status(400).json({message: "Strong password required. (Length: 8+, At least 1 lower and upper case, 1+ Number, 1+ Symbol)"})
+            throw Error("Strong password required. (Length: 8+, At least 1 lower and upper case, 1+ Number, 1+ Symbol)")
+        }
+        //TODO: username constraints i.e. regex
+        //console.log(typeof username);
+        // if (typeof username !== "string") {
+        //     return res.status(400).json({ message: "Username must be a string" })
+        // }
+
+        //check for duplicate, case insensitive
+        const duplicateUsername = await User.findOne({ username: { '$regex': username, '$options': 'i' } }).lean().exec()
+        const duplicateEmail = await User.findOne({ email: { '$regex': email, '$options': 'i' } }).lean().exec()
+        if (duplicateUsername) {
+            //return res.status(409).json({ message: 'Duplicate Username'})
+            throw Error("This username is currently in use.")
+        } else if (duplicateEmail) {
+            //return res.status(409).json({ message: 'Duplicate Email'})
+            throw Error("This email is currently in use.")
+        }
+        
+        //hash password
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds) //salt rounds
+
+        const userObject = {username, email, "password": hashedPassword, roles}
+
+        //create and store new user
+        const user = await User.create(userObject);
+        const userToken = generateToken(user._id)
+
+        res.status(200).json({email, username, userToken})
+
+    } catch (error) {
+        res.status(400).json({ error: error.message})
     }
-    //TODO: username constraints i.e. regex
-    //console.log(typeof username);
-    // if (typeof username !== "string") {
-    //     return res.status(400).json({ message: "Username must be a string" })
+    // if (user) { //user created
+    //     //res.status(201).json({ message: `new user ${username} their JWT is ${userToken}` })
+    //     res.status(200).json({email, username, userToken})
+    // } else {
+    //     res.status(400).json({ message: "Invalid User Data"})
     // }
-
-    //check for duplicate
-    const duplicateUsername = await User.findOne({ username }).lean().exec()
-    const duplicateEmail = await User.findOne({ email }).lean().exec()
-    if (duplicateUsername) {
-        return res.status(409).json({ message: 'Duplicate Username'})
-    } else if (duplicateEmail) {
-        return res.status(409).json({ message: 'Duplicate Email'})
-    }
-    
-    //hash password
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds) //salt rounds
-
-    const userObject = {username, email, "password": hashedPassword, roles}
-
-    //create and store new user
-    const user = await User.create(userObject);
-    const userToken = generateToken(user._id)
-
-    
-    if (user) { //user created
-        res.status(201).json({ message: `new user ${username} their JWT is ${userToken}` })
-    } else {
-        res.status(400).json({ message: "Invalid User Data"})
-    }
 })
 
 // @desc validate user login

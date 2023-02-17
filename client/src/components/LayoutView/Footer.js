@@ -1,7 +1,9 @@
 //todo: footer
 const Footer = () => {
   return (
-    <div>Courtesy of TMDB</div>
+    <div>
+      Courtesy of TMDB
+    </div>
   )
 }
 

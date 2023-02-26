@@ -96,30 +96,41 @@ const CharacterDisplay = ({ mediaID, mediaType, mediaName }) => {
                       );
                     })}
                   <div className="rate">
-                  <form>
-                    <fieldset>
-                    <input type="radio" id={"star5_" + i} name={"rate_" + i} value="5" />
-                    <label for={"star5_" + i}>
-                      5 stars
-                    </label>
-                    <input type="radio" id={"star4_" + i} name={"rate_" + i} value="4" />
-                    <label for={"star4_" + i}>
-                      4 stars
-                    </label>
-                    <input type="radio" id={"star3_" + i} name={"rate_" + i} value="3" />
-                    <label for={"star3_" + i}>
-                      3 stars
-                    </label>
-                    <input type="radio" id={"star2_" + i} name={"rate_" + i} value="2" />
-                    <label for={"star2_" + i}>
-                      2 stars
-                    </label>
-                    <input type="radio" id={"star1_" + i} name={"rate_" + i} value="1" />
-                    <label for={"star1_" + i}>
-                      1 star
-                    </label>
-                    </fieldset>
-                  </form>
+                    <input
+                      type="radio"
+                      id={"star5_" + i}
+                      name={"rate_" + i}
+                      value="5"
+                    />
+                    <label for={"star5_" + i}>5 stars</label>
+                    <input
+                      type="radio"
+                      id={"star4_" + i}
+                      name={"rate_" + i}
+                      value="4"
+                    />
+                    <label for={"star4_" + i}>4 stars</label>
+                    <input
+                      type="radio"
+                      id={"star3_" + i}
+                      name={"rate_" + i}
+                      value="3"
+                    />
+                    <label for={"star3_" + i}>3 stars</label>
+                    <input
+                      type="radio"
+                      id={"star2_" + i}
+                      name={"rate_" + i}
+                      value="2"
+                    />
+                    <label for={"star2_" + i}>2 stars</label>
+                    <input
+                      type="radio"
+                      id={"star1_" + i}
+                      name={"rate_" + i}
+                      value="1"
+                    />
+                    <label for={"star1_" + i}>1 star</label>
                   </div>
                 </p>
               );
@@ -145,6 +156,43 @@ const CharacterDisplay = ({ mediaID, mediaType, mediaName }) => {
               />
               <b> real name </b> = {item.name} <b> character name </b> ={" "}
               {item.character}
+              <div className="rate">
+                <input
+                  type="radio"
+                  id={"star5_" + i}
+                  name={"rate_" + i}
+                  value="5"
+                />
+                <label for={"star5_" + i}>5 stars</label>
+                <input
+                  type="radio"
+                  id={"star4_" + i}
+                  name={"rate_" + i}
+                  value="4"
+                />
+                <label for={"star4_" + i}>4 stars</label>
+                <input
+                  type="radio"
+                  id={"star3_" + i}
+                  name={"rate_" + i}
+                  value="3"
+                />
+                <label for={"star3_" + i}>3 stars</label>
+                <input
+                  type="radio"
+                  id={"star2_" + i}
+                  name={"rate_" + i}
+                  value="2"
+                />
+                <label for={"star2_" + i}>2 stars</label>
+                <input
+                  type="radio"
+                  id={"star1_" + i}
+                  name={"rate_" + i}
+                  value="1"
+                />
+                <label for={"star1_" + i}>1 star</label>
+              </div>
             </p>
           );
         })}

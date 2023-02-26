@@ -134,3 +134,47 @@
     border-radius: 4px;
     margin: 20px 0;
 } */
+
+
+/* css for the star rating */
+
+.rate {
+    display: flex;
+    justify-content: left;
+    flex-direction: row-reverse;
+}
+input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+}
+ label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+ label:before {
+    content: '★ ';
+}
+input:checked ~ label {
+    color: #ffc700;    
+}
+label:hover,
+label:hover ~ label {
+    color: #deb217;  
+}
+ input:checked + label:hover,
+ input:checked + label:hover ~ label,
+ input:checked ~ label:hover,
+ input:checked ~ label:hover ~ label,
+ label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+
+/* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
